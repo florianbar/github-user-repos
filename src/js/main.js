@@ -44,6 +44,6 @@ class GithubSearchModel {
 
 let githubSearchModel = new GithubSearchModel();
 
-$(function() {
+$(() => {
     ko.applyBindings(githubSearchModel);
 });
