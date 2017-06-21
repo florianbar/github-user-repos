@@ -10,23 +10,44 @@
     <title>Hetzner Test01</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="build/css/main.css" rel="stylesheet">
 </head>                                         
 
 <body>
-    <!-- 
-    Create a javascript web application that displays the github repos for a specified user using the github
-    API. The app should display the name, description, link and anything else you'd like for each repository.
-    -->
-    <form id="form-github-search">
-        <label for="search">Search for github user:</label>
-        <input type="text" name="search" id="search">
-        <button type="submit">Search</button>
-    </form>
+    <div class="container">
+        <div class="row" style="padding: 40px 0;"> <!-- inline styling :) -->
+            <div class="col-md-6 col-md-offset-3">
 
-    <div id="opensource-projects"></div> 
+                <h1>Github user search</h1>
+
+                <form class="well" data-bind="submit: searchUser">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for user" data-bind="value: username">
+
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- ko if: info -->
+                    <h2 data-bind="text: info().name"></h2> 
+                <!-- /ko -->
+
+                <!-- ko if: repos -->
+                    <div data-bind="foreach: repos()">
+                        <a target="_blank" data-bind="attr: { 'href': $data.html_url }">
+                            <h3 data-bind="text: $data.name"></h3>
+                        </a>
+                        <div data-bind="text: $data.description"></div>
+                        <hr>
+                    </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="build/js/knockout-3.4.2.js"></script>
     <script src="build/js/main.js"></script>
 </body>
 </html>

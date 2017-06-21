@@ -16,9 +16,9 @@ var paths = {
 gulp.task('pageReload', () => {
   return gulp.src(paths.pages)
     .pipe(livereload());
-})
+});
 
-gulp.task('runBabel', () => {
+gulp.task('babel', () => {
   return gulp.src(paths.scripts)
     .pipe(babel({
       presets: ['es2015']
@@ -27,19 +27,19 @@ gulp.task('runBabel', () => {
     .pipe(livereload());
 });
 
-gulp.task('sass', function() {
+gulp.task('sass', () => {
   return gulp.src(paths.sass)
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(paths.build_sass))
     .pipe(livereload());
 });
  
-gulp.task('watch', function() {
+gulp.task('watch', () => {
   livereload.listen();
 
-  gulp.watch(paths.scripts, ['runBabel']);
+  gulp.watch(paths.scripts, ['babel']);
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.pages, ['pageReload']);
 });
  
-gulp.task('default', ['runBabel', 'sass', 'watch']);
+gulp.task('default', ['babel', 'sass', 'watch']);
