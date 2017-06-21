@@ -8,8 +8,8 @@ const livereload  = require('gulp-livereload');
 var paths = {
   scripts       : 'src/js/*.js',
   sass          : 'src/sass/*.scss',
-  build_scripts : 'build/js/*.js',
-  build_sass    : 'build/sass/*.scss',
+  build_scripts : 'build/js',
+  build_sass    : 'build/css',
   pages         : '*.html',
 };
 
@@ -23,14 +23,14 @@ gulp.task('runBabel', () => {
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(gulp.dest(build_scripts))
+    .pipe(gulp.dest(paths.build_scripts))
     .pipe(livereload());
 });
 
 gulp.task('sass', function() {
   return gulp.src(paths.sass)
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(build_sass))
+    .pipe(gulp.dest(paths.build_sass))
     .pipe(livereload());
 });
  
