@@ -1,10 +1,41 @@
-function printRepoCount() {
- 	var responseObj = JSON.parse(this.responseText);
-	//console.log(responseObj.name + " has " + responseObj.public_repos + " public repositories!");
-	console.log(responseObj);
+function fetchJSON(url) {  
+    return new Promise((resolve, reject) => {
+        $.getJSON(url)
+            .done((json) => resolve(json))
+            .fail((xhr, status, err) => reject(status + err.message));
+    });
 }
 
-var request = new XMLHttpRequest();
-request.onload = printRepoCount;
-request.open('get', 'https://api.github.com/users/funchal', true);
-request.send();
+function getUserInfo(username) {
+    let promise = fetchJSON("https://api.github.com/users/" + username);
+
+    promise.then((reponse) => {
+        console.log(reponse);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+
+function getUserRepos(username) {
+    let promise = fetchJSON("https://api.github.com/users/" + username + "/repos?callback=?");
+    
+    promise.then((reponse) => {
+        console.log(reponse.data);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+}
+
+$(function() {
+
+    $('#form-github-search').submit((e) => {
+        e.preventDefault();
+
+        let username = $('#search').val();
+        getUserInfo(username);
+        getUserRepos(username);
+    });
+
+});
